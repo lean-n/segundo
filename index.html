@@ -17,40 +17,57 @@
       align-items: center;
     }
 
-    .console {
-      background: rgba(0, 0, 0, 0.7);
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 20px #00ff99;
-      max-width: 80%;
-    }
-
-    .line {
-      margin: 5px 0;
-    }
-
-    .cursor {
-      display: inline-block;
-      width: 10px;
-      background: #00ff99;
-      animation: blink 1s infinite;
-    }
-
-    @keyframes blink {
-      0%, 50% { opacity: 1; }
-      51%, 100% { opacity: 0; }
-    }
-  </style>
-</head>
-<body>
-  <div class="console">
-    <div class="line">> JUANA MOLINA</div>
-    <div class="line">> Segundo</div>
-    <div class="line">> Dirección por privado</div>
-    <div class="line">> Entrada con bono contribución</div>
-    <div class="line">> Traer un alimento no perecedero</div>
-    <div class="line">> DOMINGO 7 · 18HS</div>
-    <div class="line">> Cupos limitados<span class="cursor"></span></div>
-  </div>
-</body>
-</html>
+    export default function FlyerConsola() {
+  return (
+    <div style={{
+      minHeight:'100dvh',display:'flex',alignItems:'center',justifyContent:'center',
+      background:'radial-gradient(1200px 800px at 50% 40%, #0f171a 0%, #0b0f10 60%)',
+      fontFamily:'ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace',
+      color:'#d1f7c4', padding:24
+    }}>
+      <div style={{
+        width:'min(900px,95vw)', borderRadius:12, overflow:'hidden',
+        boxShadow:'0 10px 40px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.04)',
+        background:'#0e1416', position:'relative'
+      }}>
+        <div style={{
+          display:'flex',alignItems:'center',gap:8,height:38,padding:'0 12px',
+          background:'linear-gradient(180deg,#121a1d,#0b1214)',
+          borderBottom:'1px solid rgba(255,255,255,.06)', color:'#9fb8a4', fontSize:12
+        }}>
+          <span style={{width:12,height:12,borderRadius:'50%',background:'#ff5f56'}}/>
+          <span style={{width:12,height:12,borderRadius:'50%',background:'#ffbd2e'}}/>
+          <span style={{width:12,height:12,borderRadius:'50%',background:'#27c93f'}}/>
+          <span style={{marginLeft:8,letterSpacing:'.3px'}}>bash — flyer.sh</span>
+        </div>
+        <div style={{position:'relative', padding:28, fontSize:'clamp(16px,2.6vw,22px)', lineHeight:1.5, textShadow:'0 0 8px rgba(46,229,95,.25)'}}>
+          {[
+            'JUANA MOLINA',
+            'Segundo',
+            'Dirección por privado',
+            'Entrada con bono contribución',
+            'Traer un alimento no perecedero',
+            'DOMINGO 7; 18HS'
+          ].map((t, i) => (
+            <div key={i}>
+              <span style={{color:'#7aa37a'}}>$</span>{' '}
+              <span>echo </span>
+              <span style={{color:'#2ee55f'}}>&quot;{t}&quot;</span>
+              {i === 5 && <span style={{
+                display:'inline-block', width:'.6ch', height:'1em', transform:'translateY(2px)',
+                background:'#2ee55f', marginLeft:'.15ch',
+                animation:'blink 1s steps(1) infinite'
+              }}/>}
+            </div>
+          ))}
+          <style>{`@keyframes blink{50%{opacity:0}}`}</style>
+          <div style={{
+            pointerEvents:'none', position:'absolute', inset:0,
+            backgroundImage:'repeating-linear-gradient(to bottom, rgba(255,255,255,0.06), rgba(255,255,255,0.06) 1px, rgba(0,0,0,0) 1px, rgba(0,0,0,0) 3px)',
+            mixBlendMode:'soft-light', opacity:.15
+          }} />
+        </div>
+      </div>
+    </div>
+  );
+}
